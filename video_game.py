@@ -171,6 +171,13 @@ while(not quit):
     # Project speed on orientation vector
     speed_list[n % speed_window] = global_vx * norm_fly_or[0] + global_vy * norm_fly_or[1]
 
+
+    # Update distance
+    x_position = obs['fly'][0][0]
+    y_position = obs['fly'][0][1]
+
+    distance = np.sqrt((x_position - x_start)**2 + (y_position - y_start)**2)
+
     # Compute 
     if timer_LF_activated:
         if timer_LF <= 1000:
@@ -272,7 +279,7 @@ while(not quit):
     im_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     im_txt = cv2.putText(im_rgb, state, org, font, fontScale, color, thickness, cv2.LINE_AA)
     im_speed = cv2.putText(im_txt, f'speed : {np.mean(speed_list)+0.01:.0f} mm/s', (50, 100), font, fontScale, color, thickness, cv2.LINE_AA)
-    
+    im_distance = cv2.putText(im_speed, f'distance : {int(distance)} mm', (500, 100), font, fontScale, color, thickness, cv2.LINE_AA)
     # Mise à jour de l'image affichée
     cv2.imshow('Simulation', im_speed)
 
@@ -307,24 +314,24 @@ while(not quit):
                     state = 'CPG Control'
                     activated_legs = np.ones(6)
 
-                    timer_LF = 0
-                    timer_LF_activated = False
-                    timer_LM = 0
-                    timer_LM_activated = False
-                    timer_LH = 0
-                    timer_LH_activated = False
-                    timer_RF = 0
-                    timer_RF_activated = False
-                    timer_RM = 0
-                    timer_RM_activated = False
-                    timer_RH = 0
-                    timer_RH_activated = False
-                    timer_L = 0
-                    timer_L_activated = False
-                    timer_R = 0
-                    timer_R_activated = False
-                    x_start = obs['fly'][0][0]
-                    y_start = obs['fly'][0][1]
+                timer_LF = 0
+                timer_LF_activated = False
+                timer_LM = 0
+                timer_LM_activated = False
+                timer_LH = 0
+                timer_LH_activated = False
+                timer_RF = 0
+                timer_RF_activated = False
+                timer_RM = 0
+                timer_RM_activated = False
+                timer_RH = 0
+                timer_RH_activated = False
+                timer_L = 0
+                timer_L_activated = False
+                timer_R = 0
+                timer_R_activated = False
+                x_start = obs['fly'][0][0]
+                y_start = obs['fly'][0][1]
 
         if button[1] == 1:
             quit = True
@@ -339,11 +346,11 @@ while(not quit):
                 gain_left = -axis[1] * -axis[0]
                 gain_right = -axis[1] * (1 + axis[0])
             elif axis[0] > 0.2 and (axis[1] > -0.2 or axis[1] < 0.2):
-                gain_left = axis[0]
-                gain_right = 0
-            elif axis[0] < -0.2 and (axis[1] > -0.2 or axis[1] < 0.2):
                 gain_left = 0
-                gain_right = -axis[0]
+                gain_right = axis[0]
+            elif axis[0] < -0.2 and (axis[1] > -0.2 or axis[1] < 0.2):
+                gain_left = -axis[0]
+                gain_right = 0
             elif axis[1] < 0.1 and axis[1] > -0.1 and axis[0] < 0.1 and axis[0] > -0.1:
                 gain_left = 0
                 gain_right = 0
