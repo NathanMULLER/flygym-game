@@ -327,6 +327,8 @@ while(not quit):
                     timer_L_activated = False
                     timer_R = 0
                     timer_R_activated = False
+                    x_start = obs['fly'][0][0]
+                    y_start = obs['fly'][0][1]
 
             if button[1] == 1:
                 quit = True
@@ -504,6 +506,8 @@ while(not quit):
                 timer_L_activated = False
                 timer_R = 0
                 timer_R_activated = False
+                x_start = obs['fly'][0][0]
+                y_start = obs['fly'][0][1]
             
             if key == ord('o'): #single leg control
                 single_control = True
@@ -528,6 +532,8 @@ while(not quit):
                 timer_L_activated = False
                 timer_R = 0
                 timer_R_activated = False
+                x_start = obs['fly'][0][0]
+                y_start = obs['fly'][0][1]
 
             if key == ord('i'): #full control
                 full_control = True
@@ -551,6 +557,8 @@ while(not quit):
                 timer_L_activated = False
                 timer_R = 0
                 timer_R_activated = False
+                x_start = obs['fly'][0][0]
+                y_start = obs['fly'][0][1]
         
 
         
